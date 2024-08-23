@@ -30,7 +30,7 @@ dotViewList.addEventListener("click", function(e){
 }, false);
 
 function readDots(){
-    fetch('./dots.json')
+    fetch('../test/dots.json')
         .then(function(response) { return response.json(); })
         .then(function(json) {
         dots = json.dots
