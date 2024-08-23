@@ -169,14 +169,14 @@
         .control-row{
             display: flex;
             align-items: center;
-            justify-content: left;
             padding-left: 0px;
             margin-bottom: 25px;
+            justify-content: space-between;
         }
             .control-row button{
                 border: none;
                 outline: none;
-                padding: 16px 50px;
+                padding: 16px 40px;
                 background: var(--color-btn);
                 color: #ddeeff;
                 font-size: 16px;
