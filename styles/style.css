@@ -1,0 +1,96 @@
+/*===== Variables ====================*/
+:root {
+    /*Color Pallet*/
+    --color-pallet-blue-main: #1685c7;
+    --color-pallet-blue-light: #2299cc;
+    --color-pallet-blue-dark: #1166aa;
+    --color-pallet-orange-main: #dd7733;
+    --color-pallet-orange-light: #f88e49;
+    --color-pallet-red-main: #cc3344;
+    --color-pallet-red-light: #d65c69;
+    --color-pallet-green-main: #22cc66;
+    --color-pallet-green-light: #42df81;
+    --color-pallet-purple-main: #5522cc;
+    --color-pallet-purple-light: #7142df;
+    --color-pallet-black: #000000;
+    --color-pallet-black-off: #111111;
+    --color-pallet-gray-dark-dark: #222222;
+    --color-pallet-gray-dark: #444444;
+    --color-pallet-gray-mid: #666666;
+    --color-pallet-gray-light: #999999;
+    --color-pallet-gray-light-light: #bbbbbb;
+    --color-pallet-white-off: #dddddd;
+    --color-pallet-white: #ffffff;
+    --color-pallet-gray-blue-dark: #1f1f25;
+    --color-pallet-gray-blue: #292930;
+    --color-pallet-gray-blue-light: #4b4b52;
+    --color-pallet-gray-blue-light-light: #95959d;
+
+    --color-bg-window: var(--color-pallet-gray-blue-dark);
+    --color-bg-app: var(--color-pallet-gray-blue);
+    --color-bg-field: var(--color-pallet-gray-blue-light);
+    --color-txt-field: var(--color-pallet-white-off);
+}
+
+/*===== Styles ====================*/
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Comfortaa';
+    box-sizing: border-box;
+}
+
+.container{
+    width: 100%;
+    min-height: 100vh;
+    background: var(--color-bg-window); /*linear-gradient(25deg, var(--color-bg-darker), var(--color-bg-ligher)); */
+    padding: 10px;
+}
+    .dot-app{
+        width: 100%;
+        max-width: 540px;
+        background: var(--color-bg-app);
+        margin: 100px auto 20px;
+        padding: 40px 30px 70px;
+        border-radius: 10px;
+    }
+        .title-row{
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            padding-left: 0px;
+            margin-bottom: 25px;
+        }
+            .title-row img{
+                width: 120px;
+                margin-left: 10px;
+            }
+
+        .add-row{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--color-bg-field);
+            border-radius: 30px;
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+            .add-row input{
+                flex: 1;
+                border: none;
+                outline: none;
+                color: var(--color-txt-field);
+                background: transparent;
+                padding: 10px;
+                font-size: 16px;
+            }
+            .add-row button{
+                border: none;
+                outline: none;
+                padding: 16px 50px;
+                background: #cc3344;
+                color: #ddeeff;
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 40px;
+            }
