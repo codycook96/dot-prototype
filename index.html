@@ -13,10 +13,26 @@
                     <img src="assets/images/DotLogoText_v1_160x78.png">
                 </div>
                 <div class="add-row">
-                    <input type="text" id="input-box" placeholder="...">
-                    <button>Add</button>
+                    <input type="text" id="dot-add-textbox" placeholder="...">
+                    <button onclick="addDot()">Add</button>
                 </div>
+                    <div class="dot-view">
+                        <ul id="dot-view-list">
+                        </ul>
+                    </div>
+            </div>
+            <div class="dot-reader">
+                <div class="control-row">
+                    <button onclick="readDots()">Read</button>
+                    <button onclick="displayDots()">Display</button>
+                </div>
+                    <div class = "dot-reader-view">
+                        <textarea id="dot-reader-textarea" disabled></textarea>
+                    </div>
             </div>
         </div>
+        <script src="/scripts/main.js"></script>
     </body>
 </html>
+
+
