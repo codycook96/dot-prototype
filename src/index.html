@@ -5,34 +5,25 @@
         <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
         <title>dot</title>
         <link rel="stylesheet" href="styles/style.css">
-        <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.ico">
     </head>
     <body>
         <div class="container">
             <div class="dot-app">
                 <div class="title-row">
-                    <img src="assets/images/DotLogoText_v1_160x78.png">
+                    <img src="./assets/images/DotLogoText_v1_160x78.png">
                 </div>
                 <div class="add-row">
                     <input type="text" id="dot-add-textbox" placeholder="...">
-                    <button onclick="addDot()">Add</button>
+                    <button id="button-add">Add</button>
                 </div>
                     <div class="dot-view">
                         <ul id="dot-view-list">
                         </ul>
                     </div>
             </div>
-            <div class="dot-reader">
-                <div class="control-row">
-                    <button onclick="readDots()">Read</button>
-                    <button onclick="displayDots()">Display</button>
-                </div>
-                    <div class = "dot-reader-view">
-                        <textarea id="dot-reader-textarea" disabled></textarea>
-                    </div>
-            </div>
         </div>
-        <script src="scripts/main.js"></script>
+        <script type="module" src="./scripts/main.js"></script>
     </body>
 </html>
 

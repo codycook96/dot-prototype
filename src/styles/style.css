@@ -115,93 +115,16 @@
                     background: var(--color-btn-active);
                 }
         /*.dot-view{}*/
+        .dot-view ul{
+            padding: 0px 0px 0px 30px;
+        }
             .dot-view ul li{
                 list-style: none;
-                border: #000000;
+                border: white;
+                /*border-style: hidden;*/
                 border-style: dotted;
-                
                 font-size: 18px;
-                padding: 12px 8px 12px 50px;
+                padding: 0px 0px 0px 0px;
                 user-select: none;
                 cursor: pointer;
-            }
-            .dot-view ul li::before{
-                content: '';
-                position: absolute;
-                height: 28px;
-                width: 28px;
-                border-radius: 50%;
-
-                /*background-image: url(assets/images/XXX);*/
-                background-size: cover;
-                background-position: center;
-                top: 12px;
-                left: 8px;
-            }
-            .dot-view ul li.checked{
-                color: var(--color-txt-dot-complete);
-                text-decoration: line-through;
-            }
-            .dot-view ul li span{
-                
-                /*align-self: stretch;
-                
-                position: relative;
-                right: 50px;
-                top: 50px;*/
-                
-                width: 40px;
-                height: 40px;
-                font-size: 22px;
-                color: var(--color-txt-default);
-                line-height: 40px;
-                text-align: right;
-                /*border-radius: 50%;*/
-            }
-    .dot-reader{
-        width: 100%;
-        max-width: 540px;
-        background: var(--color-bg-app);
-        margin: 100px auto 20px;
-        padding: 40px 30px 70px;
-        border-radius: 10px;
-    }
-        .control-row{
-            display: flex;
-            align-items: center;
-            padding-left: 0px;
-            margin-bottom: 25px;
-            justify-content: space-between;
-        }
-            .control-row button{
-                border: none;
-                outline: none;
-                padding: 16px 40px;
-                background: var(--color-btn);
-                color: #ddeeff;
-                font-size: 16px;
-                cursor: pointer;
-                border-radius: 40px;
-            }
-                .control-row button:hover{
-                    background: var(--color-btn-hover);
-                }
-                .control-row button:active{
-                    background: var(--color-btn-active);
-                }
-        .dot-reader-view{
-            display: flex;
-            align-items: center;
-            justify-content: left;
-            padding-left: 0px;
-        }
-            .dot-reader-view textarea{
-                flex: 1;
-                border: black;
-                outline: none;
-                color: var(--color-txt-default);
-                background: var(--color-bg-field);
-                padding: 10px;
-                font-size: 16px;
-                min-height: 200px;
             }
