@@ -98,10 +98,9 @@
                 min-width: 0;
             }
             .add-row button{
-                flex: 1;
                 border: none;
                 outline: none;
-                padding: 16px 20px;
+                padding: 16px 30px;
                 background: var(--color-btn);
                 color: #ddeeff;
                 font-size: 16px;
@@ -114,17 +113,44 @@
                 .add-row button:active{
                     background: var(--color-btn-active);
                 }
-        /*.dot-view{}*/
+        .dot-view{
+            margin-bottom: 25px;
+        }
         .dot-view ul{
-            padding: 0px 0px 0px 30px;
+            padding: 5px 0px 0px 30px;
         }
             .dot-view ul li{
                 list-style: none;
                 border: white;
-                /*border-style: hidden;*/
-                border-style: dotted;
+                border-style: hidden;
+                /*border-style: dotted;*/
                 font-size: 18px;
                 padding: 0px 0px 0px 0px;
                 user-select: none;
                 cursor: pointer;
             }
+        .file-row{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            border-radius: 30px;
+            padding-left: 0px;
+            margin-bottom: 25px;
+        }
+            .file-row button{
+                border: none;
+                outline: none;
+                padding: 16px 30px;
+                background: var(--color-btn);
+                color: #ddeeff;
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 40px;
+            }
+                .file-row button:hover{
+                    background: var(--color-btn-hover);
+                }
+                .file-row button:active{
+                    background: var(--color-btn-active);
+                }

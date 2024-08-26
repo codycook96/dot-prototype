@@ -1,17 +1,18 @@
 class DotBase {
     name;
-    #parent;
-    #children;
+    #parent
+    children;
 
-    constructor(_name, _parent = null){
+    constructor(_name, _parent = null, _children = []){
         this.name= _name;
-        this.#children = [];
+        this.children = [];
 
         //If parent is defined, link parent to this child
-        if (_parent !== null) {
+        if (_parent != null) {
             this.#parent = _parent;
             _parent.addChild(this);
         }
+        
     }
 
     get parent(){
@@ -22,10 +23,11 @@ class DotBase {
     //set parent(_parent){}
 
     get children(){
-        return this.#children;
+        return this.children;
     }
 
     //set children(_children){}
+
 
     assignParent(_parent){
         //Check to see if new parent already is parent
@@ -57,7 +59,7 @@ class DotBase {
 
     addChild(_child){
         //Can't have a dot in this direct parental lineage be assigned child
-        let nextParent = this.parent
+        let nextParent = this.#parent
         let isChildParent = false;
         while (nextParent != null) {
             if (nextParent === _child){
@@ -67,10 +69,10 @@ class DotBase {
         }
 
         //Check to make sure new child is not already in children
-        let index = this.#children.indexOf(_child);
+        let index = this.children.indexOf(_child);
         if(index === -1) {
             //Add child to children of this dot
-            this.#children.push(_child);
+            this.children.push(_child);
         }
         else{
             //throw new Error('Error: Dot.addChild - ' + _child.name + ' is already in children of ' + this.name + '.');
@@ -84,12 +86,12 @@ class DotBase {
 
     removeChild(_child){
         //Check to see if child is in this dot's children
-        let index = this.#children.indexOf(_child);
+        let index = this.children.indexOf(_child);
         if(index === -1) {
             throw new Error('Error: Dot.removeChild - ' + _child.name + ' is not a child of ' + this.name + '.');
         }
         else{
-            this.#children.splice(index, 1);
+            this.children.splice(index, 1);
         }
 
         //Ensure old child does not still have this dot as parent, if so remove it.
@@ -108,15 +110,26 @@ class DotBase {
 
         return sList;
     }
+
 }
 
 const dotHead = new DotBase("head");
 
 class Dot extends DotBase{
-    constructor(_name, _parent = dotHead){
+    constructor(_name, _parent, _children = []){
+        if(_parent == null){
+            _parent = dotHead
+        }
+        if(_children == null){
+            _children = [];
+        }
+
         super(_name, _parent)
-        this.name= _name;
-        this.assignParent(_parent);
+        
+        _children.forEach(_child => {
+            new Dot(_child.name, this, _child.children);
+        });
+
     }
 
     //Override to set to Dot Head

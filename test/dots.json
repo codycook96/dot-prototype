@@ -1,7 +1,79 @@
 {
-    "dots":[
-        "Todo A",
-        "Todo B",
-        "Todo C"
+    "dots": [
+        {
+            "name": "dot1",
+            "children": [
+                {
+                    "name": "dot1A",
+                    "children": [
+                        {
+                            "name": "dot1A1",
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "name": "dot1B",
+                    "children": [
+                        {
+                            "name": "dot1B1",
+                            "children": []
+                        },
+                        {
+                            "name": "dot1B2",
+                            "children": [
+                                {
+                                    "name": "dot1B2A",
+                                    "children": []
+                                },
+                                {
+                                    "name": "dot1B2B",
+                                    "children": [
+                                        {
+                                            "name": "dot1B2B1",
+                                            "children": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "dot1C",
+                    "children": [
+                        {
+                            "name": "dot1C1",
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "name": "dot1D",
+                    "children": []
+                },
+                {
+                    "name": "dot1E",
+                    "children": [
+                        {
+                            "name": "dot1E1",
+                            "children": []
+                        },
+                        {
+                            "name": "dot1E2",
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "name": "dot1F",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "dot2",
+            "children": []
+        }
     ]
 }

@@ -1,5 +1,5 @@
-import { Dot } from './modules/dot.js';  
-import { dotHead } from './modules/dot.js'; 
+import { Dot, dotHead } from './modules/dot.js';  
+import { importDots, exportDots } from './modules/file.js';  
 
 //HTML Variable Definitions
 const dotAddTextbox = document.getElementById("dot-add-textbox");
@@ -7,7 +7,7 @@ const dotAddTextbox = document.getElementById("dot-add-textbox");
 const dotViewList = document.getElementById("dot-view-list");
 
 
-  
+/*
 var dot1 = new Dot("Dot1")
 var dot2 = new Dot("Dot2");
 var dot3 = new Dot("Dot3");
@@ -20,6 +20,34 @@ var dot1A2 = new Dot("Dot1A2", dot1A);
 var dot1A3 = new Dot("Dot1A3", dot1A);
 var dot1A2A = new Dot("Dot1A2A", dot1A2);
 var dot1A2B = new Dot("Dot1A2B", dot1A2);
+*/
+
+
+//dotHead.toJSON();
+
+//let dotHeadText = dotHead.toJSON();
+
+/*
+let dotArr = JSON.parse(dotHeadText);
+
+dotArr.dots.forEach(_dot => {
+    dotHead.addChild(new Dot(_dot.name, null, _dot.children))
+})
+*/
+//console.log(dotHead);
+
+//console.log(JSON.stringify(dotHead,null,2));
+
+var dotFilePath = "../test/dots.json"
+
+await importDots(dotFilePath);
+await exportDots(dotFilePath);
+
+//console.log(dotHead.fromJSON(dotHeadText));
+
+
+//console.log(dotHead);
+//console.log(JSON.stringify(dotHead));
 
 drawDots(dotHead, dotViewList)
 
@@ -39,48 +67,6 @@ function drawDots(dot, list){
         list.appendChild(li);
         drawDots(child, ul)
     });
+
 }
 
-/*
-var el = document.getElementById("button-display");
-if (el.addEventListener)
-    el.addEventListener("click", displayDots, false);
-else if (el.attachEvent)
-    el.attachEvent('onclick', displayDots);
-
-function displayDots(){
-    dotReadView.value = dotHead.list("");  
-}    
-
-var el = document.getElementById("button-read");
-if (el.addEventListener)
-    el.addEventListener("click", readDots, false);
-else if (el.attachEvent)
-    el.attachEvent('onclick', readDots);
-
-function readDots(){
-    dot2.assignParent(dot3);
-    drawDots(dotHead, dotViewList);
-}  
-*/
-
-
-
-/*
-let dots = ["test1", "test2"];
-
-function addDot(){
-    if(dotAddTextbox.value === ''){
-        alert("You must enter some text!");
-    }
-    else{
-        let li = document.createElement("li");
-        li.innerHTML = dotAddTextbox.value;
-        dotViewList.appendChild(li);
-        let mySpan = document.createElement("span");
-        mySpan.innerHTML = "\u00d7";
-        li.appendChild(mySpan);
-    }
-    dotAddTextbox.value = "";
-}
-*/
