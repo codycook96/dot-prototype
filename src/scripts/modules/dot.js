@@ -1,24 +1,26 @@
+import { extMgr } from "./extend.js";
+
+export var dotExtFuncs = [];
+
+await extMgr.getExtensions();
+
 class DotBase {
-    name;
     #parent
     children;
+    li;
+    ul;
 
-    constructor(_name, _parent = null, _children = []){
-        this.name= _name;
+    constructor(){
+        this.#parent = null;
         this.children = [];
-
-        //If parent is defined, link parent to this child
-        if (_parent != null) {
-            this.#parent = _parent;
-            _parent.addChild(this);
-        }
-        
+        this.li = document.createElement("li");
+        this.ul = document.createElement("ul")
+        this.li.appendChild(this.ul);
     }
 
     get parent(){
         return this.#parent;
     }
-
 
     //set parent(_parent){}
 
@@ -29,28 +31,9 @@ class DotBase {
     //set children(_children){}
 
 
+    //
     assignParent(_parent){
-        //Check to see if new parent already is parent
-        if(_parent !== this.#parent){
-            //Store old parent
-            let oldParent = this.#parent;
-
-            //Assign new parent
-            this.#parent = _parent;
-
-            //Check if old parent has this child in its children, if so remove it
-            let index = oldParent.children.indexOf(this);
-            if(index !== -1) {
-                oldParent.removeChild(this);
-            }
-
-            //Add self to child list of new parent
-            _parent.addChild(this);
-        }
-        else{
-            //throw new Error('Error: Dot.asignParent - ' + _parent.name + ' is already assigned as parent of ' + this.name + '.');
-        }
-
+        this.#parent = null;
     }
 
     removeParent(){
@@ -58,24 +41,14 @@ class DotBase {
     }
 
     addChild(_child){
-        //Can't have a dot in this direct parental lineage be assigned child
-        let nextParent = this.#parent
-        let isChildParent = false;
-        while (nextParent != null) {
-            if (nextParent === _child){
-                throw new Error('Error: Dot.addChild - ' + _child.name + ' is in ' + this.name + '\'s parental lineage and so cannot be added as a child.');
-            }
-            nextParent = nextParent.parent;
-        }
-
         //Check to make sure new child is not already in children
+        console.log("addChild _child:")
+        console.log(_child);
         let index = this.children.indexOf(_child);
         if(index === -1) {
             //Add child to children of this dot
             this.children.push(_child);
-        }
-        else{
-            //throw new Error('Error: Dot.addChild - ' + _child.name + ' is already in children of ' + this.name + '.');
+            this.ul.appendChild(_child.li);
         }
 
         //If child has not assigned this dot as parent, do so
@@ -88,10 +61,11 @@ class DotBase {
         //Check to see if child is in this dot's children
         let index = this.children.indexOf(_child);
         if(index === -1) {
-            throw new Error('Error: Dot.removeChild - ' + _child.name + ' is not a child of ' + this.name + '.');
+            throw new Error('Error: Dot.removeChild - dot is not a child of other dot.');
         }
         else{
             this.children.splice(index, 1);
+            this.ul.removeChild(_child);
         }
 
         //Ensure old child does not still have this dot as parent, if so remove it.
@@ -100,23 +74,22 @@ class DotBase {
         }
 
     }
-
-    list(sLevel){
-        let sList = sLevel + "+ " + this.name + "\n";
-        
-        this.children.forEach(child => {
-            sList = sList + child.list("|   " + sLevel);
-        });
-
-        return sList;
-    }
-
 }
 
-const dotHead = new DotBase("head");
+const dotHead = new DotBase();
 
-class Dot extends DotBase{
-    constructor(_name, _parent, _children = []){
+const creator = (allExtensions, extension) => extension(allExtensions);
+const extender = (...parts) => parts.reduce(creator, DotBase);
+
+class Dot extends extender(...dotExtFuncs){
+    #parent;
+    children;
+    #li;
+    ul;
+
+    constructor(_parent = null, _children = []){
+        super();
+
         if(_parent == null){
             _parent = dotHead
         }
@@ -124,12 +97,39 @@ class Dot extends DotBase{
             _children = [];
         }
 
-        super(_name, _parent)
+        this.assignParent(_parent);
         
         _children.forEach(_child => {
-            new Dot(_child.name, this, _child.children);
+            new Dot(this, _child.children);
         });
+    
+    }
+    
+    assignParent(_parent){
+        //Check to see if new parent already is parent
+        if(_parent != null){
 
+            if(_parent !== this.#parent){
+                //Store old parent
+                let oldParent = this.#parent;
+
+                //Assign new parent
+                this.#parent = _parent;
+
+                //Check if old parent has this child in its children, if so remove it
+                if(oldParent != null){
+                    let index = oldParent.children.indexOf(this);
+                    if(index !== -1) {
+                        oldParent.removeChild(this);
+                    }
+                }
+                //Add self to child list of new parent
+                _parent.addChild(this);
+            }
+            else{
+                //throw new Error('Error: Dot.asignParent - ' + _parent.name + ' is already assigned as parent of ' + this.name + '.');
+            }
+        }
     }
 
     //Override to set to Dot Head
@@ -144,7 +144,7 @@ class Dot extends DotBase{
         let isChildParent = false;
         while (nextParent !== dotHead) {
             if (nextParent === _child){
-                throw new Error('Error: Dot.addChild - ' + _child.name + ' is in ' + this.name + '\'s parental lineage and so cannot be added as a child.');
+                throw new Error('Error: Dot.addChild - dot is in other dot\'s parental lineage and so cannot be added as a child.');
             }
             nextParent = nextParent.parent;
         }
@@ -152,7 +152,7 @@ class Dot extends DotBase{
         //Check to make sure new child is not already in children
         let index = this.children.indexOf(_child);
         if(index !== -1) {
-            throw new Error('Error: Dot.addChild - ' + _child.name + ' is already in children of ' + this.name + '.');
+            throw new Error('Error: Dot.addChild - dot is already in children of other dot.');
         }
 
         //Add child to children of this dot
@@ -162,6 +162,19 @@ class Dot extends DotBase{
         if(_child.parent !== this){
             _child.assignParent(this);
         }
+    }
+
+    draw(list){
+        list.innerHTML = "";
+        this.children.forEach(child => {
+            let li = document.createElement("li");
+            let ul = document.createElement("ul")
+            li.innerHTML = "&#11044 " + child.name
+            li.appendChild(ul);
+            list.appendChild(li);
+            drawDots(child, ul)
+        });
+    
     }
 }
 
