@@ -1,6 +1,8 @@
+import { loadNextScript } from "../loader.js";
 import { extMgr } from "./extend.js";
+import { fileMgr } from "./file.js";
 
-export var dotExtFuncs = [];
+var loadFlag_Dot = false;
 
 await extMgr.getExtensions();
 
@@ -10,12 +12,13 @@ class DotBase {
     li;
     ul;
 
-    constructor(){
-        this.#parent = null;
-        this.children = [];
+    constructor(_parent = null, _children = []){
+        this.#parent = _parent;
+        this.children = _children;
         this.li = document.createElement("li");
         this.ul = document.createElement("ul")
         this.li.appendChild(this.ul);
+
     }
 
     get parent(){
@@ -33,7 +36,31 @@ class DotBase {
 
     //
     assignParent(_parent){
-        this.#parent = null;
+        //Check to see if new parent already is parent
+        if(_parent != null){
+
+            if(_parent !== this.#parent){
+                //Store old parent
+                let oldParent = this.#parent;
+
+                //Assign new parent
+                this.#parent = _parent;
+
+                //Check if old parent has this child in its children, if so remove it
+                if(oldParent != null){
+                    let index = oldParent.children.indexOf(this);
+                    if(index !== -1) {
+                        oldParent.removeChild(this);
+                    }
+                }
+
+                //Add self to child list of new parent
+                _parent.addChild(this);
+            }
+            else{
+                //throw new Error('Error: Dot.asignParent - ' + _parent.name + ' is already assigned as parent of ' + this.name + '.');
+            }
+        }
     }
 
     removeParent(){
@@ -42,8 +69,6 @@ class DotBase {
 
     addChild(_child){
         //Check to make sure new child is not already in children
-        console.log("addChild _child:")
-        console.log(_child);
         let index = this.children.indexOf(_child);
         if(index === -1) {
             //Add child to children of this dot
@@ -81,14 +106,13 @@ const dotHead = new DotBase();
 const creator = (allExtensions, extension) => extension(allExtensions);
 const extender = (...parts) => parts.reduce(creator, DotBase);
 
-class Dot extends extender(...dotExtFuncs){
-    #parent;
-    children;
-    #li;
-    ul;
-
+class Dot extends extender(...extMgr.functions){
     constructor(_parent = null, _children = []){
         super();
+        
+        this.li = document.createElement("li");
+        this.ul = document.createElement("ul")
+        this.li.appendChild(this.ul);
 
         if(_parent == null){
             _parent = dotHead
@@ -96,16 +120,17 @@ class Dot extends extender(...dotExtFuncs){
         if(_children == null){
             _children = [];
         }
-
+ 
         this.assignParent(_parent);
-        
+
+        this.children = [];
         _children.forEach(_child => {
             new Dot(this, _child.children);
         });
     
     }
     
-    assignParent(_parent){
+    /*assignParent(_parent){
         //Check to see if new parent already is parent
         if(_parent != null){
 
@@ -123,6 +148,7 @@ class Dot extends extender(...dotExtFuncs){
                         oldParent.removeChild(this);
                     }
                 }
+
                 //Add self to child list of new parent
                 _parent.addChild(this);
             }
@@ -130,7 +156,7 @@ class Dot extends extender(...dotExtFuncs){
                 //throw new Error('Error: Dot.asignParent - ' + _parent.name + ' is already assigned as parent of ' + this.name + '.');
             }
         }
-    }
+    }*/
 
     //Override to set to Dot Head
     removeParent(){
@@ -142,7 +168,7 @@ class Dot extends extender(...dotExtFuncs){
         //Can't have a dot in this direct parental lineage be assigned child
         let nextParent = this.parent
         let isChildParent = false;
-        while (nextParent !== dotHead) {
+        while ((nextParent != null) && (nextParent !== dotHead)) {
             if (nextParent === _child){
                 throw new Error('Error: Dot.addChild - dot is in other dot\'s parental lineage and so cannot be added as a child.');
             }
@@ -177,6 +203,94 @@ class Dot extends extender(...dotExtFuncs){
     
     }
 }
+
+
+async function importDots(path){
+
+    let data = "";
+
+    data = await fileMgr.readFile(path);
+
+    let importJSON = JSON.parse(data);
+    let dotArr = importJSON.dots;
+
+    dotArr.forEach(_obj => {
+
+        let newDot = new Dot(dotHead)
+        
+        console.log(_obj);
+        for(var prop in _obj){
+            if(prop !== "children" && prop !== "parent"){
+                newDot[prop] = _obj[prop];
+            }
+        }
+
+        dotHead.addChild(newDot);
+
+        _obj.children.forEach(ocd => {
+            createDots(newDot, ocd);
+        });
+
+    });  
+}
+
+function createDots(_dot, _obj){
+    _obj.children.forEach( ocd => {
+        let newDot = new Dot(_dot)
+        for(var prop in ocd){
+            if(prop !== "children" && prop !== "parent"){
+                console.log("Assigning " + prop + " = " + ocd[prop]);
+                newDot[prop] = ocd[prop];
+            }
+        }
+        //_dot.addChild(newDot);
+        if(ocd.children.length > 0){
+            createDots(newDot, ocd);
+        }
+    })
+    
+}
+
+//using global dotHead
+async function exportDots(path){
+    let text = "";
+    let dottext = ""
+
+    text += "{\n\t\"dots\": [";
+
+    dotHead.children.forEach(child => {
+        dottext += "\n";
+        dottext += JSON.stringify(child, null, 2);
+        if(dotHead.children.indexOf(child) !== dotHead.children.length - 1){
+            dottext += ","
+        }
+    })
+    //Add two tabs to every line to indent this section
+    dottext = dottext.replace(/^/gm, "\t\t");
+
+    text += dottext;
+    text += "\n\t]\n}";
+
+    //REPLACE ME
+    console.log(text);
+}
+
+
+
+
+
+
+
+var dotFilePath = "../test/dots.json"
+
+await importDots(dotFilePath);
+
+loadFlag_Dot = true;
+
+console.log(dotHead);
+
+loadNextScript();
+
 
 export {Dot};
 export {dotHead};

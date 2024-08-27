@@ -1,27 +1,52 @@
-import { Dot, dotHead } from './modules/dot.js';  
-import { fileMgr } from './modules/file.js';  
-import { extMgr} from "./modules/extend.js";
+import { Dot, dotHead } from './dot.js';  
+import { fileMgr } from './file.js';  
+import { extMgr} from "./extend.js";
 
+export function main(){
+    console.log("main");
+    const dotList = document.getElementById("dot-list");
+    console.log(dotList);
+
+    dotHead.children.forEach(ch => {
+        dotList.appendChild(ch.li);
+    });
+    
+}
+
+main();
+
+
+
+
+
+
+
+/*
 
 //HTML Variable Definitions
 const dotAddTextbox = document.getElementById("dot-add-textbox");
 
-const dotViewList = document.getElementById("dot-view-list");
+const dotView = document.getElementById("dot-view");
 
-dotViewList.appendChild(dotHead.li);
-
+//dotViewList.appendChild(dotHead.li);
 var dotFilePath = "../test/dots.json"
-await fileMgr.importDots(dotFilePath);
+//await extMgr.getExtensions();
+//await fileMgr.importDots(dotFilePath);
+
+console.log(dotHead)
+
+dotView.appendChild(dotHead.ul);
+
+
 //await exportDots(dotFilePath);
 
 //await extMgr.extensions[0].load();
 
-await extMgr.getExtensions();
 
+*/
 //let d1 = new Dot();
 //let d2 = new Dot();
 
-console.log(d1);
 
 /*
 drawDots(dotHead, dotViewList)

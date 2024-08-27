@@ -1,6 +1,6 @@
 function description(Base) {
     class Description extends Base {
-        constructor(_desc = "default_description") {
+        constructor(_desc = null) {
             super();
             this.description = _desc;
         }

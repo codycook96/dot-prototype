@@ -1,5 +1,7 @@
+import { loadNextScript } from "../loader.js";
 import { fileMgr } from "./file.js";
-import { dotExtFuncs } from "./dot.js";
+
+var loadFlag_Extension = false;
 
 class Extension{
     constructor(_name, _path, _version){
@@ -42,63 +44,48 @@ class Extension{
 
 class ExtensionManager{
     extensions;
-    extCfgPath;
-    funcList;
+    pathExtensions;
+    functions;
     constructor(){
         this.extensions = [];
-        this.funcList = [];
-        this.extCfgPath = "/src/scripts/extensions/extensions.json"
+        this.functions = [];
+        this.pathExtensions = "/src/scripts/extensions/extensions.json"
     }
 
     async getExtensionConfig(){
-        await fileMgr.importExtensionList(this.extCfgPath);
+        let data = "";
+    
+        data = await fileMgr.readFile(this.pathExtensions);
+        let importJSON = JSON.parse(data);
+        let extArr = importJSON.extensions;
+        extArr.forEach(_ext => {
+            this.extensions.push(new Extension(_ext.name, _ext.path, _ext.version))
+        });
     }
 
     async getExtensionFunc(){
         for (let i = 0; i < this.extensions.length; i++){
             let text = await fileMgr.readFile(this.extensions[i].path);
             this.extensions[i].function = new Function("return " + text)();
-            localStorage.setItem("dotExtFuncs[" + i + "]", this.extensions[i].function)
-            dotExtFuncs.push(this.extensions[i].function);
-            
+            this.functions.push(this.extensions[i].function);
         };
-        console.log(dotExtFuncs);
-    }
 
-    async loadExtensionFunc(){
-        /*for (let i = 0; i < this.extensions.length; i++){
-            console.log("eval: " + this.extensions[i].name);
-            await eval(this.extensions[i].function);
-        };*/
-    }
-
-    async getFuncList(){
-        /*let args = [];
-        for(let i = 0; i < this.extensions.length; i++){
-            //call function first
-            //await eval(this.extensions[i].function);
-            
-            //args.push(eval(this.extensions[i].name));
-            args.push(this.extensions.function)
-        }
-        console.log(this.funcList);*/
     }
 
     async getExtensions(){
         await this.getExtensionConfig().then(() => 
-            this.getExtensionFunc().then(() => 
-                this.loadExtensionFunc().finally(() => 
-                    this.getFuncList())));
+            this.getExtensionFunc());
     }
 
 
 }
 
-console.log("extend write:");
-console.log(dotExtFuncs)
-
-
-
 var extMgr = new ExtensionManager(); 
+
+await extMgr.getExtensions();
+
+loadFlag_Extension = true;
+console.log("end of extend.js");
+loadNextScript();
 
 export {Extension, ExtensionManager, extMgr};
