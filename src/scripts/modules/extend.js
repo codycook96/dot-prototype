@@ -4,40 +4,14 @@ import { fileMgr } from "./file.js";
 var loadFlag_Extension = false;
 
 class Extension{
-    constructor(_name, _path, _version){
+    constructor(_name, _path, _version, _author, _enabled){
         this.name = _name;
         this.path = _path;
         this.version = _version;
+        this.author = _author;
+        this.enabled = _enabled;
         this.function = "";
-        this.enabled = false;
         this.loaded = false;
-
-        this.element = document.createElement('script');
-        this.element.src = this.path;
-        this.element.type = 'module';
-        this.element.async = true;
-        this.element.onload = () => {
-            this.loaded = true;
-            console.log("Extension " + this.name + " loaded.")
-        };
-        this.element.onunload = () => {
-            this.loaded = false;
-            console.log("Extension " + this.name + " unloaded.")
-        }
-        this.element.onerror = () => {console.log("Error loading extension " + this.name + ".")};
-    }
-
-    async load(){
-        const scriptLoadPromise = new Promise(resolve => {
-            document.body.appendChild(this.element);
-            this.element.onload = resolve;
-        });
-    
-        await scriptLoadPromise;
-    }
-
-    async unload(){
-        document.body.removeChild(this.element);
     }
 
 }
@@ -59,15 +33,21 @@ class ExtensionManager{
         let importJSON = JSON.parse(data);
         let extArr = importJSON.extensions;
         extArr.forEach(_ext => {
-            this.extensions.push(new Extension(_ext.name, _ext.path, _ext.version))
+            this.extensions.push(new Extension(_ext.name, _ext.path, _ext.version, _ext.author, _ext.enabled))
         });
     }
 
     async getExtensionFunc(){
         for (let i = 0; i < this.extensions.length; i++){
-            let text = await fileMgr.readFile(this.extensions[i].path);
-            this.extensions[i].function = new Function("return " + text)();
-            this.functions.push(this.extensions[i].function);
+            if(this.extensions[i].enabled){
+                let text = await fileMgr.readFile(this.extensions[i].path);
+                this.extensions[i].function = new Function("return " + text)();
+                this.functions.push(this.extensions[i].function);
+                this.extensions[i].loaded = true;
+            }
+            else{
+                this.extensions[i].loaded = false;
+            }
         };
 
     }
@@ -85,7 +65,7 @@ var extMgr = new ExtensionManager();
 await extMgr.getExtensions();
 
 loadFlag_Extension = true;
-console.log("end of extend.js");
+
 loadNextScript();
 
 export {Extension, ExtensionManager, extMgr};

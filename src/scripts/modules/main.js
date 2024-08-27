@@ -3,14 +3,44 @@ import { fileMgr } from './file.js';
 import { extMgr} from "./extend.js";
 
 export function main(){
-    console.log("main");
     const dotList = document.getElementById("dot-list");
-    console.log(dotList);
 
     dotHead.children.forEach(ch => {
         dotList.appendChild(ch.li);
     });
     
+    var dotButtonAdd = document.getElementById("dot-button-add");
+    var dotTextboxAdd = document.getElementById("dot-textbox-add");
+
+    //dotButtonAdd.onclick = dothing1;
+    dotButtonAdd.addEventListener("click", function(){
+        let nD = new Dot(dotHead);
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+        nD.name = "test"; //dotTextboxAdd.value;
+
+        dotTextboxAdd.value = "";
+        dotHead.addChild(new Dot(dotHead));
+
+    });
+
 }
 
 main();

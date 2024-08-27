@@ -26,7 +26,7 @@ class fileManager{
 const fileMgr = new fileManager();
 
 loadFlag_File = true;
-console.log("end of file.js");
+
 loadNextScript();
 
 export { fileMgr };

@@ -3,12 +3,16 @@
         {
             "name": "dot_name",
             "path": "/src/scripts/extensions/dot/dot_name.js",
-            "version": "1.0" 
+            "version": "1.0",
+            "author":   "Cody Cook",
+            "enabled":  false 
         },
         {
             "name": "dot_description",
             "path": "/src/scripts/extensions/dot/dot_description.js",
-            "version": "1.0"
+            "version": "1.0",
+            "author":   "Cody Cook",
+            "enabled":  true
         }
     ]
 }

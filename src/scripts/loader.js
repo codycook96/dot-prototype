@@ -12,10 +12,8 @@ scripts.forEach(s =>{
     window.scriptLoadMap.set(s, false);
 });
 
-console.log(window.scriptLoadMap);
-
 var scriptIndex = -1;
-console.log("Start loading...");
+
 loadNextScript();
 
 export function loadNextScript(){
@@ -23,14 +21,12 @@ export function loadNextScript(){
     if(scriptIndex >= scripts.length){
         loadComplete();
     }
-    console.log("Loading " + scripts[scriptIndex] + "...");
+
     loadScript(scripts[scriptIndex], null, loadError, 10);
-    console.log("Loading scrips complete.");
     
 }
 
 function loadComplete(){
-    console.log("calling main");
     //main();
 }
 
@@ -88,7 +84,6 @@ function loadScript(src, onLoadCallback, onLoadErrorCallback, retryCount) {
         markScriptFullyLoaded(src)
         
         // Optional callback on script load
-        console.log("...returning from load...")
         if (onLoadCallback) onLoadCallback();
     };
     

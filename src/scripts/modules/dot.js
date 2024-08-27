@@ -32,7 +32,10 @@ class DotBase {
     }
 
     //set children(_children){}
-
+    
+    update(){
+        return;
+    }
 
     //
     assignParent(_parent){
@@ -130,6 +133,11 @@ class Dot extends extender(...extMgr.functions){
     
     }
     
+    update(){
+        super.update();
+        return;
+    }
+
     /*assignParent(_parent){
         //Check to see if new parent already is parent
         if(_parent != null){
@@ -218,7 +226,6 @@ async function importDots(path){
 
         let newDot = new Dot(dotHead)
         
-        console.log(_obj);
         for(var prop in _obj){
             if(prop !== "children" && prop !== "parent"){
                 newDot[prop] = _obj[prop];
@@ -226,10 +233,8 @@ async function importDots(path){
         }
 
         dotHead.addChild(newDot);
-
-        _obj.children.forEach(ocd => {
-            createDots(newDot, ocd);
-        });
+        
+        createDots(newDot, _obj);
 
     });  
 }
@@ -239,7 +244,6 @@ function createDots(_dot, _obj){
         let newDot = new Dot(_dot)
         for(var prop in ocd){
             if(prop !== "children" && prop !== "parent"){
-                console.log("Assigning " + prop + " = " + ocd[prop]);
                 newDot[prop] = ocd[prop];
             }
         }
@@ -272,7 +276,9 @@ async function exportDots(path){
     text += "\n\t]\n}";
 
     //REPLACE ME
-    console.log(text);
+    //TODO
+    //Add file output / download
+    //console.log(text);
 }
 
 
@@ -287,7 +293,6 @@ await importDots(dotFilePath);
 
 loadFlag_Dot = true;
 
-console.log(dotHead);
 
 loadNextScript();
 
