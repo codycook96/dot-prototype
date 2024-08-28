@@ -1,12 +1,11 @@
-function description(Base) {
-    class Description extends Base {
+function dot_description(Base) {
+    class Dot_Description extends Base {  
         constructor() {
             super();
+
             this._elements_dot_description = [];
             this._elements_dot_description.push(document.createElement('p'));
             this._style_dot_description = document.createElement('style');
-
-            this.update();
         }
         set description(_desc = null){
             this._description = _desc
@@ -15,16 +14,18 @@ function description(Base) {
         get description(){
             return this._description;
         }
+
         update(){
             super.update();
+            
             this._elements_dot_description[0].id="dot-description";
             this._elements_dot_description[0].innerHTML = this._description;
             
-
             //Define Style
             this._style_dot_description.appendChild(document.createTextNode(`
                 #dot-description { 
-                  color: #33AA99; 
+                  color: #99a;
+                  font-size: 14px; 
                 }`
               ));
             
@@ -36,10 +37,10 @@ function description(Base) {
             
             //this._elements_dot_name[0].setAttribute("style", this._style_dot_name);
             //Add element if not already added
-            if(!this.li.contains(this._element_dot_description)){
-                this.li.insertAdjacentElement('afterbegin',this._elements_dot_description[0]);
+            if(!this.div.contains(this._elements_dot_description[0])){
+                this.div.insertAdjacentElement('beforeend',this._elements_dot_description[0]);
             }
         } 
     }
-    return Description;
+    return Dot_Description;
 }

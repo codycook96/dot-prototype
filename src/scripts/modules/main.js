@@ -14,31 +14,14 @@ export function main(){
 
     //dotButtonAdd.onclick = dothing1;
     dotButtonAdd.addEventListener("click", function(){
-        let nD = new Dot(dotHead);
+        console.log("click")
+        let nD = new Dot(dotHead.children[0]);
         nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
-        nD.name = "test"; //dotTextboxAdd.value;
+ 
 
         dotTextboxAdd.value = "";
-        dotHead.addChild(new Dot(dotHead));
-
+        //dotHead.addChild(new Dot(dotHead));
+        console.log(nD);
     });
 
 }

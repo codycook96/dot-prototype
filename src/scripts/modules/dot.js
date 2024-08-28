@@ -10,15 +10,22 @@ class DotBase {
     #parent
     children;
     li;
+    div;
     ul;
 
     constructor(_parent = null, _children = []){
         this.#parent = _parent;
         this.children = _children;
-        this.li = document.createElement("li");
-        this.ul = document.createElement("ul")
-        this.li.appendChild(this.ul);
 
+        this.li = document.createElement("li");
+        this.ul = document.createElement("ul");
+        this.div = document.createElement("div");
+        this.li.id = "dot-view-li";
+        this.ul.id = "dot-view-ul";
+        this.div.id = "dot-view-div";
+        this.li.appendChild(this.div);
+        this.li.appendChild(this.ul);
+        
     }
 
     get parent(){
@@ -114,7 +121,12 @@ class Dot extends extender(...extMgr.functions){
         super();
         
         this.li = document.createElement("li");
-        this.ul = document.createElement("ul")
+        this.ul = document.createElement("ul");
+        this.div = document.createElement("div");
+        this.li.id = "dot-view-li";
+        this.ul.id = "dot-view-ul";
+        this.div.id = "dot-view-div";
+        this.li.appendChild(this.div);
         this.li.appendChild(this.ul);
 
         if(_parent == null){

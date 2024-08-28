@@ -53,17 +53,17 @@
 }
 
 .container{
-    width: 100%;
+    width: auto;
     min-height: 100vh;
     background: var(--color-bg-window); /*linear-gradient(25deg, var(--color-bg-darker), var(--color-bg-ligher)); */
     padding: 10px;
 }
     .dot-app{
-        width: 100%;
+        width: auto;
         max-width: 540px;
         background: var(--color-bg-app);
         margin: 100px auto 20px;
-        padding: 40px 30px 50px;
+        padding: 30px 30px 30px;
         border-radius: 10px;
     }
         .title-row{
@@ -114,18 +114,40 @@
                     background: var(--color-btn-active);
                 }
         .dot-view{
+            background-color: var(--color-bg-window);
+            padding: 10px 15px 10px 10px;
             margin-bottom: 25px;
+            border-radius: 10px;
         }
         .dot-view ul{
-            padding: 5px 0px 0px 30px;
+            list-style: none;
+            padding: 10px 5px 5px auto;
+            margin: 10px auto;
+            padding-inline-start: 5px;
+
+            border-style: dotted;
+            border-color: white;
+            border-width: 0px;
         }
             .dot-view ul li{
-                list-style: none;
-                border: white;
-                border-style: hidden;
-                /*border-style: dotted;*/
-                font-size: 18px;
-                padding: 0px 0px 0px 0px;
+                /*border-style: hidden;*/
+                list-style-position: inside;
+                border-style: dotted;
+                border-color: yellow;
+                user-select: none;
+                cursor: pointer;
+                border-width: 0px;
+            }
+            .dot-view div{
+                display: flex;
+                justify-content: left;
+                align-items: baseline;
+                gap: 20px;
+                max-width: 540px;
+                margin: 30px 30px 5px, 5px;
+                padding: 10px 10px 10px 10px;
+                border-radius: 10px;
+                background-color: var(--color-bg-app);
                 user-select: none;
                 cursor: pointer;
             }
