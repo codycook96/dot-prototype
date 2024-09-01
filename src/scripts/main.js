@@ -1,28 +1,44 @@
-import { Dot, dotHead } from './dot.js';  
-import { fileMgr } from './file.js';  
-import { extMgr} from "./extend.js";
+import { debug } from "./modules/debug/debug.js";
+import { AppManager } from "./modules/app_manager.js";
+import { Dot } from "./modules/dot/dot.js";
+import { dotHead } from "./modules/dot/dot_head.js";
 
-export function main(){
+export var extensions = [];
+
+async function main(){
     const dotList = document.getElementById("dot-list");
 
-    dotHead.children.forEach(ch => {
-        dotList.appendChild(ch.li);
+    var appManager = new AppManager({
+        path: "/src/test/dots.json",
+        ul: dotList
+    })
+    //debug.log("This is a test");
+
+    //var d1 = new Dot({name: "d1"})
+
+    debug.obj(appManager);
+
+    debug.log("Log this message at main line 17");
+
+    await appManager.loadFile();
+    
+    debug.obj(appManager, "First call after load file.")
+
+    const btn_ext = document.getElementById("dot-button-ext");
+    debug.obj(btn_ext);
+    btn_ext.addEventListener("click", (event) => {
+        appManager.loadExtensions();
+        
+    });
+
+
+
+    var btn_dot = document.getElementById("dot-button-dot");
+    btn_dot.addEventListener("click", (event) => {
+        appManager.loadDots();
     });
     
-    var dotButtonAdd = document.getElementById("dot-button-add");
-    var dotTextboxAdd = document.getElementById("dot-textbox-add");
-
-    //dotButtonAdd.onclick = dothing1;
-    dotButtonAdd.addEventListener("click", function(){
-        console.log("click")
-        let nD = new Dot(dotHead.children[0]);
-        nD.name = "test"; //dotTextboxAdd.value;
- 
-
-        dotTextboxAdd.value = "";
-        //dotHead.addChild(new Dot(dotHead));
-        console.log(nD);
-    });
+    
 
 }
 

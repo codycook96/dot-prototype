@@ -1,14 +1,26 @@
 function dot_name(Base) {
     class Dot_Name extends Base {
-        constructor() {
-            super();
-        
-            this._elements_dot_name= [];
+        //constructor({name = "Dummy", ...rest} = {}) {
+        constructor(params = {}){   
+            super(params);
+            const objParams = Object.assign({
+                debug: null,
+                name: "Default",
+            }, params);
+            let name = objParams.name;
+            
+            this._name = name;
+            this._elements_dot_name=[];
             this._elements_dot_name.push(document.createElement('p'));
+            this._elements_dot_name[0].id="dot-name";
             this._style_dot_name = document.createElement('style');
+
+            if (objParams.debug != null){
+                objParams.debug.con(this, undefined, "Dot_Name [" + this._name + "]");
+            }
         }
         set name(_name = null){
-            this._name = _name
+            this._name = _name;
             this.update();
         }
         get name(){
@@ -17,8 +29,7 @@ function dot_name(Base) {
 
         update(){
             super.update();
-            
-            this._elements_dot_name[0].id="dot-name";
+
             this._elements_dot_name[0].innerHTML = this._name;
             
             //Define Style
