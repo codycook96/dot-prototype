@@ -1,0 +1,13 @@
+{
+    "dots": [],
+    "extensions": [
+        {
+            "name": "dot_template",
+            "module": "dot", 
+            "path": "/src/scripts/extensions/dot/dot_template.js",
+            "version": "1.0",
+            "author":   "Cody Cook",
+            "enabled":  true
+        }
+    ]
+}

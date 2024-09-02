@@ -1,11 +1,10 @@
 function dot_description(Base) {
     class Dot_Description extends Base {  
-        //constructor({description = "", ...rest} = {}) {
         constructor(params = {}){   
             super(params);
             const objParams = Object.assign({
                 debug: null,
-                description: "default description"
+                description: ""
             }, params);
             let description = objParams.description;
 

@@ -1,11 +1,10 @@
 function dot_name(Base) {
     class Dot_Name extends Base {
-        //constructor({name = "Dummy", ...rest} = {}) {
         constructor(params = {}){   
             super(params);
             const objParams = Object.assign({
                 debug: null,
-                name: "Default",
+                name: "",
             }, params);
             let name = objParams.name;
             

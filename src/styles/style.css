@@ -121,16 +121,23 @@
         }
         .dot-view ul{
             list-style: none;
-            padding: 10px 5px 5px auto;
-            margin: 10px auto;
-            padding-inline-start: 5px;
+            padding-top: 0;
+            /*padding: 10px 5px 5px auto;*/
+            /*margin: 10px auto;*/
+            padding-inline-start: 20px;
 
             border-style: dotted;
             border-color: white;
             border-width: 0px;
         }
+            .dot-view li > ul {
+                margin-top: 10px;
+            }
+            /*
             .dot-view ul li{
-                /*border-style: hidden;*/
+                border-style: hidden;
+                padding: 5px 5px 5px auto;
+                margin: 10px auto;
                 list-style-position: inside;
                 border-style: dotted;
                 border-color: yellow;
@@ -138,6 +145,11 @@
                 cursor: pointer;
                 border-width: 0px;
             }
+            */
+            .dot-view li + li {
+                margin-top: 10px;
+              }
+            
             .dot-view div{
                 display: flex;
                 justify-content: left;
